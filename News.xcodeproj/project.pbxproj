@@ -21,6 +21,7 @@
 		EB6DF9322A23BDD600976763 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EB6DF9312A23BDD600976763 /* Assets.xcassets */; };
 		EB6DF9352A23BDD600976763 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EB6DF9332A23BDD600976763 /* LaunchScreen.storyboard */; };
 		EB6DF9412A23BE6800976763 /* ApiCaller.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB6DF9402A23BE6800976763 /* ApiCaller.swift */; };
+		EB81557F2A25FBDB00A657BB /* NewsDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB81557E2A25FBDB00A657BB /* NewsDetailViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -42,6 +43,7 @@
 		EB6DF9342A23BDD600976763 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		EB6DF9362A23BDD600976763 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		EB6DF9402A23BE6800976763 /* ApiCaller.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiCaller.swift; sourceTree = "<group>"; };
+		EB81557E2A25FBDB00A657BB /* NewsDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsDetailViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -109,6 +111,7 @@
 				EB26E2E72A23D33400A1205D /* ContainerViewController.swift */,
 				EB26E2E92A23D43600A1205D /* HomeViewController.swift */,
 				EB26E2EB2A23D43B00A1205D /* MenuViewController.swift */,
+				EB81557E2A25FBDB00A657BB /* NewsDetailViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -258,6 +261,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EB81557F2A25FBDB00A657BB /* NewsDetailViewController.swift in Sources */,
 				EB26E2EA2A23D43600A1205D /* HomeViewController.swift in Sources */,
 				EB26E2EC2A23D43B00A1205D /* MenuViewController.swift in Sources */,
 				EB6DF9292A23BDD500976763 /* AppDelegate.swift in Sources */,

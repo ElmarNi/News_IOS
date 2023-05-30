@@ -9,6 +9,6 @@ import Foundation
 
 struct NewsResponse: Codable {
     let status: String
-    var results: [News]
+    let results: [News]
     let nextPage: String?
 }

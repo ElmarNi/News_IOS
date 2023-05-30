@@ -23,8 +23,8 @@ class ContainerViewController: UIViewController {
         super.viewDidLoad()
         
         addChildViewControllers()
-        view.addGestureRecognizer(createSwipeGesture(for: .left))
-        view.addGestureRecognizer(createSwipeGesture(for: .right))
+        homeVC.view.addGestureRecognizer(createSwipeGesture(for: .left))
+        homeVC.view.addGestureRecognizer(createSwipeGesture(for: .right))
     }
     
     private func addChildViewControllers() {
@@ -97,6 +97,10 @@ extension ContainerViewController: HomeViewControllerDelegate {
         toggleMenu()
     }
     
+    func didTapTableViewItem() {
+        closeMenu()
+    }
+    
 }
 
 extension ContainerViewController: MenuViewControllerDelegate {
@@ -105,6 +109,7 @@ extension ContainerViewController: MenuViewControllerDelegate {
         HapticsManager.shared.vibrateForSelection()
         homeVC.title = menuItem.rawValue
         closeMenu()
+        homeVC.getData(category: menuItem.rawValue)
     }
     
 }

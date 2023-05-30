@@ -38,7 +38,7 @@ class NewsTableViewCell: UITableViewCell {
     private let descriptionLabel: UILabel = {
         let label = UILabel()
         label.font = .systemFont(ofSize: 15, weight: .regular)
-        label.numberOfLines = 0
+        label.numberOfLines = 4
         return label
     }()
     
@@ -80,7 +80,7 @@ class NewsTableViewCell: UITableViewCell {
         titleLabel.frame = CGRect(x: 10, y: coverImageView.bottom + 10, width: contentView.width - 20, height: titleLabel.height)
         creatorNameLabel.frame = CGRect(x: 10, y: titleLabel.bottom + 5, width: (contentView.width / 2) - 15, height: 17)
         pubDateLabel.frame = CGRect(x: (contentView.width / 2) + 5, y: titleLabel.bottom + 5, width: (contentView.width / 2) - 15, height: 17)
-        descriptionLabel.frame = CGRect(x: 10, y: pubDateLabel.bottom + 10, width: contentView.width - 20, height: descriptionLabel.height)
+        descriptionLabel.frame = CGRect(x: 10, y: pubDateLabel.bottom + 10, width: contentView.width - 20, height: min(100, descriptionLabel.height))
     }
     
     public func configure(with model: News) {
@@ -88,7 +88,7 @@ class NewsTableViewCell: UITableViewCell {
         creatorNameLabel.text = model.creator?.first ?? ""
         pubDateLabel.text = model.pubDate.components(separatedBy: " ")[0]
         descriptionLabel.text = model.description
-        coverImageView.sd_setImage(with: URL(string: model.image_url ?? "")) {[weak self] _,_,_,_  in
+        coverImageView.sd_setImage(with: URL(string: model.image_url ?? ""), placeholderImage: UIImage(systemName: "photo")) {[weak self] _,_,_,_  in
             self?.spinner.stopAnimating()
         }
     }

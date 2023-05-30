@@ -9,13 +9,13 @@ import UIKit
 
 protocol HomeViewControllerDelegate: AnyObject {
     func didTapMenuButton()
+    func didTapTableViewItem()
 }
 
 class HomeViewController: UIViewController {
     
     weak var delegate: HomeViewControllerDelegate?
     private var models = [News]()
-    private var nextPage: String? = nil
     
     private let tableView: UITableView = {
         let tableView = UITableView(frame: .zero)
@@ -43,7 +43,8 @@ class HomeViewController: UIViewController {
         view.addSubview(spinner)
         tableView.delegate = self
         tableView.dataSource = self
-        getData(nextPage: nil)
+        getData(category: nil)
+        
     }
     
     override func viewDidLayoutSubviews() {
@@ -57,12 +58,12 @@ class HomeViewController: UIViewController {
         delegate?.didTapMenuButton()
     }
     
-    private func getData(nextPage: String?) {
-        ApiCaller.shared.getNews(nextPage: nil) { [weak self] result in
+    public func getData(category: String?) {
+        spinner.startAnimating()
+        ApiCaller.shared.getNews(category: category) { [weak self] result in
             DispatchQueue.main.async {
                 switch result {
                 case .success(let model):
-                    self?.nextPage = model.nextPage
                     self?.models = model.results
                     self?.tableView.isHidden = false
                     self?.tableView.reloadData()
@@ -73,6 +74,8 @@ class HomeViewController: UIViewController {
             }
         }
     }
+    
+    
 
 }
 
@@ -95,19 +98,16 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
         let model = models[indexPath.row]
         
         let titleLabelHeight = model.title.getHeightForLabel(font: .systemFont(ofSize: 16, weight: .semibold), width: view.width - 20)
-        let descriptionLabelHeight = model.description.getHeightForLabel(font: .systemFont(ofSize: 15, weight: .regular), width: view.width - 20)
-        
+        var descriptionLabelHeight = model.description.getHeightForLabel(font: .systemFont(ofSize: 15, weight: .regular), width: view.width - 20)
+        descriptionLabelHeight = min(70, descriptionLabelHeight)
         return titleLabelHeight + descriptionLabelHeight + 262
     }
     
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        let height = scrollView.frame.size.height
-        let contentYOffset = scrollView.contentOffset.y
-        let distanceFromBottom = scrollView.contentSize.height - contentYOffset
-        if distanceFromBottom < height {
-            spinner.startAnimating()
-            getData(nextPage: nextPage)
-        }
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        let newsDetailVC = NewsDetailViewController(news: models[indexPath.row])
+        navigationController?.pushViewController(newsDetailVC, animated: true)
+        delegate?.didTapTableViewItem()
     }
     
 }

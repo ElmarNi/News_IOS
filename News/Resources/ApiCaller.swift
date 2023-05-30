@@ -12,7 +12,7 @@ final class ApiCaller {
     private init() {}
     
     struct Constants{
-        static let baseUrl: String = "https://newsdata.io/api/1/news?apikey=pub_23561009608b5d299ae9fb303b94c261a755b&language=en,tr,az,ru"
+        static let baseUrl: String = "https://newsdata.io/api/1/news?apikey=pub_23713bdb371cc529eaa1ab8b60b1a7fee537a&language=en,tr,az,ru"
     }
     
     struct ApiError: LocalizedError {
@@ -34,10 +34,10 @@ final class ApiCaller {
         case PUT
     }
     
-    public func getNews(nextPage: String?, completion: @escaping (Result<NewsResponse, Error>) -> Void) {
-        let url = nextPage == nil ? Constants.baseUrl : Constants.baseUrl + "&page=\(nextPage ?? "")"
-        print(url)
-        createRequest(url: URL(string: url), method: .GET) { request in
+    public func getNews(category: String?, completion: @escaping (Result<NewsResponse, Error>) -> Void) {
+        let urlString = category == nil ? Constants.baseUrl : Constants.baseUrl + "&category=\(category ?? "")"
+
+        createRequest(url: URL(string: urlString ), method: .GET) { request in
             URLSession.shared.dataTask(with: request) { data, _, error in
                 guard let data = data, error == nil else {
                     completion(.failure(ApiError("failedToGetData")))
@@ -53,10 +53,7 @@ final class ApiCaller {
                         completion(.failure(ApiError(message)))
                         return
                     }
-                    var result = try JSONDecoder().decode(NewsResponse.self, from: data)
-                    result.results = result.results.filter({ item in
-                        item.image_url != nil
-                    })
+                    let result = try JSONDecoder().decode(NewsResponse.self, from: data)
                     completion(.success(result))
                 }
                 catch {
